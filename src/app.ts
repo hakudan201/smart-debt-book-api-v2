@@ -39,7 +39,7 @@ export default async function (fastify: FastifyInstance, opts: FastifyPluginOpti
     dir: path.join(__dirname, 'modules'),
     maxDepth: 1,
     dirNameRoutePrefix: false,
-    matchFilter: (path: string) => path.endsWith('.module.js') || path.endsWith('.module.ts'),
+    matchFilter: (path: string) => path.endsWith('.module.js'),
     options: Object.assign({}, opts)
   })
 
