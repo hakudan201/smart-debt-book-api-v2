@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
-import app from './app.js'
-import { options } from './app.js'
+import app from './app.server.js'
+import { options } from './app.server.js'
 
 const server = Fastify({
   logger: {

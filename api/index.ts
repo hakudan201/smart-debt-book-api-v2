@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
-import app from '../dist/app.js'
-import { options } from '../dist/app.js'
+import app from '../dist/app.server.js'
+import { options } from '../dist/app.server.js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 // Create a singleton Fastify instance for serverless
