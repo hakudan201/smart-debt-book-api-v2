@@ -1,7 +1,7 @@
 import fp from 'fastify-plugin'
-import authRoutes from './auth.routes'
-import createAuthService from './auth.service'
-import createAuthController from './auth.controller'
+import authRoutes from './auth.routes.js'
+import createAuthService from './auth.service.js'
+import createAuthController from './auth.controller.js'
 import type { FastifyInstance, FastifyPluginOptions } from 'fastify'
 
 /**

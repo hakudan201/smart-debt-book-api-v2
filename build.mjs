@@ -1,7 +1,8 @@
 import { execSync } from 'child_process'
 
 // Build the source code using TypeScript compiler to generate .d.ts files
-// This allows api/index.ts to import from ../dist/app with proper types
+// With moduleResolution: "nodenext", TypeScript requires .js extensions in source files
+// This ensures proper ESM support and type checking
 console.log('🔨 Building source code with TypeScript...')
 
 try {

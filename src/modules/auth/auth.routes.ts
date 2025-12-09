@@ -6,7 +6,7 @@ import {
   getProfileSchema,
   refreshSchema,
   logoutSchema
-} from './schemas/index'
+} from './schemas/index.js'
 
 /**
  * Auth Routes - Define all authentication endpoints

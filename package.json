@@ -1,6 +1,7 @@
 {
   "name": "smart-debt-book-api-v2",
   "version": "1.0.0",
+  "type": "module",
   "description": "This project was bootstrapped with Fastify-CLI.",
   "main": "dist/app.ts",
   "directories": {

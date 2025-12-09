@@ -11,7 +11,7 @@ import {
   TooManyRequestsError,
   InternalServerError,
   ServiceUnavailableError
-} from '../utils/errors'
+} from '../utils/errors.js'
 
 /**
  * Error Handler Plugin - Centralized error handling for the application

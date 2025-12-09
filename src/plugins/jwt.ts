@@ -1,7 +1,7 @@
 import fp from 'fastify-plugin'
 import jwt from '@fastify/jwt'
 import type { FastifyInstance, FastifyPluginOptions, FastifyRequest } from 'fastify'
-import { UnauthorizedError } from '../utils/errors'
+import { UnauthorizedError } from '../utils/errors.js'
 
 /**
  * JWT plugin - Handles JWT token generation and verification
