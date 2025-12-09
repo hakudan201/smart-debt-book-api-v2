@@ -71,7 +71,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Set response status and headers
   res.statusCode = response.statusCode
-  response.headers.forEach((value, key) => {
+  response.headers.forEach((value: string, key: string) => {
     // Skip content-length as Vercel handles it
     if (key.toLowerCase() !== 'content-length') {
       res.setHeader(key, value)
