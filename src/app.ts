@@ -18,7 +18,7 @@ export default async function (fastify: FastifyInstance, opts: FastifyPluginOpti
   await fastify.register(cookie)
 
   // Welcome route
-  fastify.get('/', async (request, reply) => {
+  fastify.get('/', async () => {
     return {
       message: 'Welcome to Smart Debt Book API',
       version: '1.0.0',

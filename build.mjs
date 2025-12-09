@@ -6,7 +6,11 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 // Build the API handler for Vercel
-await build({
+console.log('🔨 Starting build...')
+console.log(`📦 Entry: api/index.ts`)
+console.log(`📤 Output: api/index.js`)
+
+const result = await build({
   entryPoints: ['api/index.ts'],
   bundle: true,
   platform: 'node',
@@ -33,8 +37,11 @@ await build({
   resolveExtensions: ['.ts', '.js', '.json'],
   banner: {
     js: "import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
-  }
+  },
+  logLevel: 'info',
+  keepNames: true
 })
 
 console.log('✅ Build complete!')
+console.log(`📊 Output size: ${result.metafile ? 'See metafile' : 'N/A'}`)
 
