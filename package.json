@@ -10,7 +10,9 @@
   "scripts": {
     "test": "node --test test/**/*.test.ts",
     "dev": "tsx watch src/server.ts",
-    "build": "prisma generate && tsc",
+    "build": "prisma generate && node build.mjs",
+    "build:tsc": "prisma generate && tsc",
+    "build:api": "node build.mjs",
     "lint": "eslint \"src/**/*.ts\" --fix"
   },
   "keywords": [],
@@ -41,6 +43,7 @@
     "@types/pg": "^8.11.10",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
+    "esbuild": "^0.27.1",
     "eslint": "^9.0.0",
     "prisma": "^7.1.0",
     "tsx": "^4.19.2",
