@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "yarn install && yarn build",
-  "buildCommand": null,
+  "installCommand": "yarn install",
+  "buildCommand": "yarn build",
   "rewrites": [
     {
       "source": "/(.*)",
@@ -10,7 +10,8 @@
   ],
   "functions": {
     "api/index.ts": {
-      "maxDuration": 60
+      "maxDuration": 60,
+      "includeFiles": "dist/**"
     }
   }
 }
