@@ -1,6 +1,0 @@
-src/**
-test/**
-coverage/**
-*.test.ts
-*.test.js
-
