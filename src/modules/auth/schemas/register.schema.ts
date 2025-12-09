@@ -14,19 +14,16 @@ export const registerSchema: FastifySchema = {
       email: {
         type: 'string',
         format: 'email',
-        description: 'User email address',
-        example: 'user@example.com'
+        description: 'User email address'
       },
       password: {
         type: 'string',
         minLength: 8,
-        description: 'User password. Must be at least 8 characters, contain uppercase, lowercase, and number',
-        example: 'SecurePass123'
+        description: 'User password. Must be at least 8 characters, contain uppercase, lowercase, and number'
       },
       fullname: {
         type: 'string',
-        description: 'User full name',
-        example: 'John Doe'
+        description: 'User full name'
       }
     }
   },
@@ -53,14 +50,14 @@ export const registerSchema: FastifySchema = {
       description: 'Bad request - validation error',
       type: 'object',
       properties: {
-        message: { type: 'string', example: 'Email, password, and fullname are required' }
+        message: { type: 'string' }
       }
     },
     409: {
       description: 'Conflict - user already exists',
       type: 'object',
       properties: {
-        message: { type: 'string', example: 'User with this email already exists' }
+        message: { type: 'string' }
       }
     }
   }

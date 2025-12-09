@@ -30,7 +30,7 @@ export const refreshSchema: FastifySchema = {
       description: 'Unauthorized - invalid or expired refresh token',
       type: 'object',
       properties: {
-        message: { type: 'string', example: 'Invalid refresh token' }
+        message: { type: 'string' }
       }
     }
   }

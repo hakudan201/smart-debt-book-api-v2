@@ -13,8 +13,7 @@ export const logoutSchema: FastifySchema = {
       type: 'object',
       properties: {
         message: {
-          type: 'string',
-          example: 'Logged out successfully'
+          type: 'string'
         }
       }
     }

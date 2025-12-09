@@ -13,8 +13,7 @@ export const getProfileSchema: FastifySchema = {
     properties: {
       authorization: {
         type: 'string',
-        description: 'Bearer token',
-        example: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+        description: 'Bearer token'
       }
     },
     required: ['authorization']
@@ -26,19 +25,16 @@ export const getProfileSchema: FastifySchema = {
       properties: {
         userId: {
           type: 'number',
-          description: 'User ID',
-          example: 1
+          description: 'User ID'
         },
         email: {
           type: 'string',
           format: 'email',
-          description: 'User email address',
-          example: 'user@example.com'
+          description: 'User email address'
         },
         emailVerified: {
           type: 'boolean',
-          description: 'Whether the email has been verified',
-          example: false
+          description: 'Whether the email has been verified'
         }
       }
     },
@@ -46,14 +42,14 @@ export const getProfileSchema: FastifySchema = {
       description: 'Unauthorized - invalid or missing token',
       type: 'object',
       properties: {
-        message: { type: 'string', example: 'Unauthorized' }
+        message: { type: 'string' }
       }
     },
     404: {
       description: 'User not found',
       type: 'object',
       properties: {
-        message: { type: 'string', example: 'User not found' }
+        message: { type: 'string' }
       }
     }
   }

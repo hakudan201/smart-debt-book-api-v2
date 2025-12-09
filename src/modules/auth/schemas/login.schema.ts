@@ -14,13 +14,11 @@ export const loginSchema: FastifySchema = {
       email: {
         type: 'string',
         format: 'email',
-        description: 'User email address',
-        example: 'user@example.com'
+        description: 'User email address'
       },
       password: {
         type: 'string',
-        description: 'User password',
-        example: 'SecurePass123'
+        description: 'User password'
       }
     }
   },
@@ -51,14 +49,14 @@ export const loginSchema: FastifySchema = {
       description: 'Bad request - missing credentials',
       type: 'object',
       properties: {
-        message: { type: 'string', example: 'Email and password are required' }
+        message: { type: 'string' }
       }
     },
     401: {
       description: 'Unauthorized - invalid credentials',
       type: 'object',
       properties: {
-        message: { type: 'string', example: 'Invalid credentials' }
+        message: { type: 'string' }
       }
     }
   }
