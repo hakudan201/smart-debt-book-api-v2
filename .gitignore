@@ -56,3 +56,9 @@ profile-*
 profile*
 *clinic*
 *flamegraph*
+
+/generated/prisma
+.env
+
+# dist
+dist

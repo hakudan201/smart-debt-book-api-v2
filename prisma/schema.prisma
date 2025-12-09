@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                     Int                      @id @default(autoincrement())
+  email                  String                   @unique
+  password               String
+  fullname               String
+  emailVerified          Boolean                  @default(false) @map("email_verified")
+  createdAt              DateTime                 @default(now()) @map("created_at")
+  bankAccounts           BankAccount[]
+  debtors                Debtor[]
+  emailTemplates         EmailTemplate[]
+  refreshTokens          RefreshToken[]
+  emailVerificationTokens EmailVerificationToken[]
+  bills                  Bill[]
+}
+
+model Debtor {
+  id               Int        @id @default(autoincrement())
+  userId           Int        @map("user_id")
+  displayNameAlias String     @map("display_name_alias")
+  email            String
+  phone            String?
+  zaloChatId       String?    @map("zalo_chat_id")
+  createdAt        DateTime   @default(now()) @map("created_at")
+  deletedAt        DateTime?  @map("deleted_at")
+  billNames        BillName[]
+  user             User       @relation(fields: [userId], references: [id])
+  loans            Loan[]
+  payments         Payment[]
+  billItems        BillItem[]
+  zaloLinks        DebtorZaloLink[]
+
+  @@unique([userId, email])
+  @@map("debtors")
+}
+
+model BillName {
+  id       Int    @id @default(autoincrement())
+  debtorId Int    @map("debtor_id")
+  name     String
+  debtor   Debtor @relation(fields: [debtorId], references: [id])
+
+  @@map("bill_names")
+}
+
+model Loan {
+  id          Int        @id @default(autoincrement())
+  debtorId    Int        @map("debtor_id")
+  amount      Int
+  paidAmount  Int        @default(0) @map("paid_amount")
+  description String?
+  status      LoanStatus @default(Outstanding)
+  loanDate    DateTime   @map("loan_date")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  billId     Int?        @map("bill_id")
+  debtor      Debtor     @relation(fields: [debtorId], references: [id])
+  bill        Bill?      @relation(fields: [billId], references: [id])
+
+  @@map("loans")
+}
+
+model Payment {
+  id          Int      @id @default(autoincrement())
+  debtorId    Int      @map("debtor_id")
+  amount      Int
+  paymentDate DateTime @map("payment_date")
+  createdAt   DateTime @default(now()) @map("created_at")
+  debtor      Debtor   @relation(fields: [debtorId], references: [id])
+
+  @@map("payments")
+}
+
+model RefreshToken {
+  id                 Int       @id @default(autoincrement())
+  userId             Int       @map("user_id")
+  tokenHash          String    @map("token_hash")
+  expiresAt          DateTime  @map("expires_at")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  revokedAt          DateTime? @map("revoked_at")
+  replacedByTokenId  Int?      @map("replaced_by_token_id")
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@map("refresh_tokens")
+}
+
+model BankAccount {
+  id                Int     @id @default(autoincrement())
+  userId            Int     @map("user_id")
+  bankCode          String  @db.VarChar(100) @map("bank_code")
+  accountNumber     String  @db.VarChar(100) @map("account_number")
+  accountHolderName String   @map("account_holder_name")
+  isPrimary         Boolean  @default(false) @map("is_primary")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  user              User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, bankCode, accountNumber])
+  @@map("bank_accounts")
+}
+
+model EmailTemplate {
+  id        Int     @id @default(autoincrement())
+  userId    Int?    @map("user_id")
+  name      String
+  subject   String
+  body      String
+  isDefault Boolean @default(false) @map("is_default")
+  user      User?   @relation(fields: [userId], references: [id])
+
+  @@map("email_templates")
+}
+
+model EmailVerificationToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  token     String   @unique
+  expiresAt DateTime @map("expires_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  usedAt    DateTime? @map("used_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("email_verification_tokens")
+}
+
+model Bill {
+  id          Int        @id @default(autoincrement())
+  userId      Int        @map("user_id")
+  rawText     String?    @map("raw_text")
+  name        String     @db.VarChar(100)
+  status      BillStatus @default(NewlyCreated)
+  loanDate    DateTime   @map("loan_date")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  user        User       @relation(fields: [userId], references: [id])
+  items       BillItem[]
+  loans       Loan[]
+
+  @@map("bills")
+}
+
+model BillItem {
+  id              Int     @id @default(autoincrement())
+  billId          Int     @map("bill_id")
+  name            String
+  amount          Int
+  matchedDebtorId Int?    @map("matched_debtor_id")
+  bill            Bill     @relation(fields: [billId], references: [id], onDelete: Cascade)
+  matchedDebtor   Debtor? @relation(fields: [matchedDebtorId], references: [id])
+
+  @@map("bill_items")
+}
+
+enum LoanStatus {
+  Outstanding
+  PartiallyPaid
+  Paid
+}
+
+enum BillStatus {
+  NewlyCreated
+  LoansCreated
+}
+
+model DebtorZaloLink {
+  id        Int       @id @default(autoincrement())
+  debtorId  Int       @map("debtor_id")
+  code      String    @unique
+  usedAt    DateTime? @map("used_at")
+  expiresAt DateTime  @map("expires_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+  debtor    Debtor    @relation(fields: [debtorId], references: [id], onDelete: Cascade)
+
+  @@map("debtor_zalo_links")
+}
