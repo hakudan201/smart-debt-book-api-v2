@@ -10,7 +10,7 @@
   "functions": {
     "api/index.ts": {
       "maxDuration": 60,
-      "includeFiles": "node_modules/@scalar/fastify-api-reference/dist/utils/js/**"
+      "includeFiles": "{dist/**,node_modules/@scalar/fastify-api-reference/dist/utils/js/**}"
     }
   }
 }
