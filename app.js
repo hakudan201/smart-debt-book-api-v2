@@ -1,13 +1,20 @@
-'use strict'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import AutoLoad from '@fastify/autoload'
+import scalarApiReference from '@scalar/fastify-api-reference'
 
-const path = require('node:path')
-const AutoLoad = require('@fastify/autoload')
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 // Pass --options via CLI arguments in command to enable these options.
 const options = {}
 
-module.exports = async function (fastify, opts) {
+export default async function (fastify, opts) {
   // Place here your custom code!
+
+  await fastify.register(scalarApiReference, {
+    routePrefix: '/reference',
+  })
 
   // Do not touch the following lines
 
@@ -27,4 +34,4 @@ module.exports = async function (fastify, opts) {
   })
 }
 
-module.exports.options = options
+export { options }
