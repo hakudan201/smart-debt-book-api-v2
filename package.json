@@ -12,7 +12,6 @@
     "dev": "tsx watch src/server.ts",
     "build": "prisma generate && node build.mjs",
     "build:tsc": "prisma generate && tsc",
-    "build:api": "node build.mjs",
     "lint": "eslint \"src/**/*.ts\" --fix"
   },
   "keywords": [],

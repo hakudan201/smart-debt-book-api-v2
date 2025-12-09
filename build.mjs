@@ -5,18 +5,17 @@ import { dirname } from 'path'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-// Build the API handler for Vercel
-console.log('🔨 Starting build...')
-console.log(`📦 Entry: api-src/index.ts`)
-console.log(`📤 Output: api/index.js`)
+// Build the source code for Vercel (similar to reference project)
+// This builds the src directory so api/index.ts can import from ../dist/app
+console.log('🔨 Building source code...')
 
 const result = await build({
-  entryPoints: ['api-src/index.ts'],
+  entryPoints: ['src/app.ts'],
   bundle: true,
   platform: 'node',
   target: 'node20',
   format: 'esm',
-  outfile: 'api/index.js',
+  outfile: 'dist/app.js',
   external: [
     '@prisma/client',
     '@prisma/adapter-pg',
@@ -29,7 +28,6 @@ const result = await build({
     '@fastify/swagger',
     '@fastify/swagger-ui',
     '@scalar/fastify-api-reference',
-    '@vercel/node',
     'argon2',
     'jsonwebtoken',
     'fastify-plugin'
@@ -42,6 +40,5 @@ const result = await build({
   keepNames: true
 })
 
-console.log('✅ Build complete!')
-console.log(`📊 Output size: ${result.metafile ? 'See metafile' : 'N/A'}`)
+console.log('✅ Source build complete!')
 
