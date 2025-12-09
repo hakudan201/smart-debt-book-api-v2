@@ -55,10 +55,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (typeof req.body === 'string') {
       payload = req.body
     } else if (Buffer.isBuffer(req.body)) {
-      payload = req.body.toString()
+      payload = req.body.toString('utf8')
     } else {
       payload = JSON.stringify(req.body)
+      // Set content-type if not already set
+      if (!headers['content-type'] && !headers['Content-Type']) {
+        headers['content-type'] = 'application/json'
+      }
     }
+  }
+
+  // Remove content-length header as Fastify will calculate it
+  const contentLengthKey = Object.keys(headers).find(
+    key => key.toLowerCase() === 'content-length'
+  )
+  if (contentLengthKey) {
+    delete headers[contentLengthKey]
   }
 
   // Use Fastify's inject method to handle the request
@@ -71,12 +83,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Set response status and headers
   res.statusCode = response.statusCode
-  response.headers.forEach((value: string, key: string) => {
-    // Skip content-length as Vercel handles it
-    if (key.toLowerCase() !== 'content-length') {
-      res.setHeader(key, value)
-    }
-  })
+
+  // Fastify inject returns headers as a plain object, not iterable
+  if (response.headers) {
+    Object.keys(response.headers).forEach(key => {
+      // Skip content-length as Vercel handles it
+      if (key.toLowerCase() !== 'content-length') {
+        const value = response.headers[key]
+        if (value !== undefined) {
+          res.setHeader(key, value)
+        }
+      }
+    })
+  }
 
   // Send response body
   res.end(response.body)
