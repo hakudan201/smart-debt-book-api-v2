@@ -7,11 +7,11 @@ const __dirname = dirname(__filename)
 
 // Build the API handler for Vercel
 console.log('🔨 Starting build...')
-console.log(`📦 Entry: api/index.ts`)
+console.log(`📦 Entry: api-src/index.ts`)
 console.log(`📤 Output: api/index.js`)
 
 const result = await build({
-  entryPoints: ['api/index.ts'],
+  entryPoints: ['api-src/index.ts'],
   bundle: true,
   platform: 'node',
   target: 'node20',
